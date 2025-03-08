@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargador de Videos - Instagram, TikTok, Facebook</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="navbar-brand">
+                    <i class="fas fa-download"></i> Descargador de Videos
+                </a>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="navbar-nav" id="navbar-nav">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">
+                            <i class="fas fa-home"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/history" class="nav-link">
+                            <i class="fas fa-history"></i> Historial
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/yourusername/video-downloader" class="nav-link" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container section">
+        <!-- Home Page Content -->
+        {% if request.path == '/' %}
+            <section class="hero">
+                <h1>Descarga Videos de Redes Sociales</h1>
+                <p>Descarga videos de Instagram, TikTok y Facebook fácilmente y sin marcas de agua</p>
+            </section>
+
+            <section class="download-form">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-3">Descarga videos de Instagram, TikTok y Facebook</h2>
+                        <p class="mb-3">Simplemente pega la URL del video que deseas descargar y haz clic en el botón de descarga.</p>
+                        
+                        <form id="download-form">
+                            <div class="form-group">
+                                <label for="video-url" class="form-label">URL del video</label>
+                                <input type="url" id="video-url" class="form-control" placeholder="https://www.instagram.com/reel/..." required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="video-quality" class="form-label">Calidad</label>
+                                <select id="video-quality" class="form-select">
+                                    <option value="best">Mejor calidad</option>
+                                    <option value="medium">Calidad media</option>
+                                    <option value="worst">Calidad baja</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-block" id="submit-btn">
+                                <i class="fas fa-download"></i> Descargar Video
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section id="result-section" class="d-none">
+                <!-- El resultado de la descarga se mostrará aquí -->
+            </section>
+
+            <section class="how-it-works mt-4">
+                <h2 class="text-center mb-3">¿Cómo funciona?</h2>
+                <div class="d-flex flex-column" style="gap: 1.5rem;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>1. Pega la URL</h3>
+                            <p>Copia la URL del video de Instagram, TikTok o Facebook que deseas descargar y pégala en el campo de texto.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>2. Selecciona la calidad</h3>
+                            <p>Elige la calidad del video que deseas descargar. Recomendamos la mejor calidad para obtener resultados óptimos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>3. Descarga el video</h3>
+                            <p>Haz clic en el botón de descarga y espera a que el proceso termine. Luego podrás ver y descargar el video.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        <!-- History Page Content -->
+        {% if request.path == '/history' %}
+            <section class="history-page">
+                <h1 class="mb-3">Historial de Descargas</h1>
+                <p class="mb-4">Aquí puedes ver todos los videos que has descargado anteriormente.</p>
+                
+                <div id="history-section">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner">
+                            <i class="fas fa-spinner fa-spin fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-copyright">
+                    &copy; <span id="current-year">{% if now %}{{ now.year }}{% else %}2025{% endif %}</span> Descargador de Videos - Todos los derechos reservados
+                </div>
+                <div class="footer-links">
+                    <a href="/" class="footer-link">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <a href="/history" class="footer-link">
+                        <i class="fas fa-history"></i>
+                    </a>
+                    <a href="https://github.com/yourusername/video-downloader" class="footer-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                Esta aplicación utiliza yt-dlp para descargar videos. No almacenamos ningún contenido protegido por derechos de autor.
+                Utiliza esta herramienta de manera responsable y respeta los términos de servicio de las plataformas.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script>
+        // Toggle mobile menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('navbar-nav').classList.toggle('show');
+        });
+        
+        // Get current year for footer
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentYearElement = document.getElementById('current-year');
+            if (currentYearElement) {
+                const year = new Date().getFullYear();
+                currentYearElement.textContent = year;
+            }
+        });
+    </script>
+</body>
+</html> 
