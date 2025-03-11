@@ -5,7 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descargador de Videos - Instagram, TikTok, Facebook</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        /* Estilos básicos de respaldo en caso de que no cargue el CSS */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7ff;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: #4a6cf7;
+        }
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-item {
+            margin-left: 1.5rem;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: #4a6cf7;
+            color: white;
+            border: none;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -42,10 +110,18 @@
     <!-- Main Content -->
     <main class="container section">
         <!-- Home Page Content -->
-        {% if request.path == '/' %}
+        {% if current_path == '/' %}
             <section class="hero">
                 <h1>Descarga Videos de Redes Sociales</h1>
                 <p>Descarga videos de Instagram, TikTok y Facebook fácilmente y sin marcas de agua</p>
+                <div class="hero-cta">
+                    <a href="#download-form" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Descargar ahora
+                    </a>
+                    <a href="/app" class="btn btn-outline">
+                        <i class="fas fa-mobile-alt"></i> Obtén la app
+                    </a>
+                </div>
             </section>
 
             <section class="download-form">
@@ -152,19 +228,55 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="/static/js/app.js"></script>
     <script>
-        // Toggle mobile menu
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('navbar-nav').classList.toggle('show');
-        });
-        
-        // Get current year for footer
+        // Código de respaldo en caso de que no cargue el JS principal
         document.addEventListener('DOMContentLoaded', function() {
+            // Toggle mobile menu
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const navbarNav = document.getElementById('navbar-nav');
+            
+            if (mobileMenuBtn && navbarNav) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navbarNav.classList.toggle('show');
+                });
+            }
+            
+            // Get current year for footer
             const currentYearElement = document.getElementById('current-year');
             if (currentYearElement) {
                 const year = new Date().getFullYear();
                 currentYearElement.textContent = year;
+            }
+            
+            // Setup download form
+            const downloadForm = document.getElementById('download-form');
+            if (downloadForm) {
+                downloadForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const url = document.getElementById('video-url').value;
+                    const quality = document.getElementById('video-quality').value;
+                    
+                    if (!url) {
+                        alert('Por favor, ingresa la URL del video');
+                        return;
+                    }
+                    
+                    const submitBtn = document.getElementById('submit-btn');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Descargando...';
+                    }
+                    
+                    // Simular descarga
+                    setTimeout(function() {
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="fas fa-download"></i> Descargar Video';
+                        }
+                        alert('Esta es una versión de demostración. La descarga real requiere conexión al servidor.');
+                    }, 2000);
+                });
             }
         });
     </script>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargador de Videos - Pago Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="navbar-brand">
+                    <i class="fas fa-download"></i> Descargador de Videos
+                </a>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="navbar-nav" id="navbar-nav">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">
+                            <i class="fas fa-home"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/history" class="nav-link">
+                            <i class="fas fa-history"></i> Historial
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/app" class="nav-link">
+                            <i class="fas fa-mobile-alt"></i> App Móvil
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container section">
+        <section class="payment-hero">
+            <h1>Actualiza a Premium</h1>
+            <p class="payment-subtitle">Desbloquea todas las características premium con un solo pago</p>
+        </section>
+
+        <div class="payment-container">
+            <div class="payment-summary">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Resumen de compra</h2>
+                        <div class="purchase-details">
+                            <div class="purchase-item">
+                                <span class="item-name">Descargador de Videos - Premium</span>
+                                <span class="item-price">$4.99</span>
+                            </div>
+                            <div class="purchase-total">
+                                <span class="total-label">Total</span>
+                                <span class="total-price">$4.99</span>
+                            </div>
+                        </div>
+                        
+                        <div class="premium-features">
+                            <h3>Lo que obtendrás:</h3>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Descargas ilimitadas</li>
+                                <li><i class="fas fa-check"></i> Sin publicidad</li>
+                                <li><i class="fas fa-check"></i> Guardado directo en galería</li>
+                                <li><i class="fas fa-check"></i> Descargas en segundo plano</li>
+                                <li><i class="fas fa-check"></i> Soporte prioritario</li>
+                                <li><i class="fas fa-check"></i> Actualizaciones gratuitas</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="payment-guarantee">
+                            <i class="fas fa-shield-alt"></i>
+                            <p>Garantía de satisfacción de 30 días. Si no estás satisfecho con la aplicación, te devolvemos tu dinero.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-form">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Información de pago</h2>
+                        <form id="payment-form">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Nombre completo</label>
+                                <input type="text" id="name" class="form-control" placeholder="Juan Pérez" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Correo electrónico</label>
+                                <input type="email" id="email" class="form-control" placeholder="ejemplo@correo.com" required>
+                            </div>
+                            
+                            <div class="payment-methods">
+                                <h3>Método de pago</h3>
+                                <div class="payment-method-selector">
+                                    <div class="payment-method active" data-method="card" onclick="selectPaymentMethod(this)">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>Tarjeta</span>
+                                    </div>
+                                    <div class="payment-method" data-method="paypal" onclick="selectPaymentMethod(this)">
+                                        <i class="fab fa-paypal"></i>
+                                        <span>PayPal</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="card-payment-fields">
+                                <div class="form-group">
+                                    <label for="card-number" class="form-label">Número de tarjeta</label>
+                                    <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456" required>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <label for="expiry" class="form-label">Fecha de expiración</label>
+                                        <input type="text" id="expiry" class="form-control" placeholder="MM/AA" required>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="cvv" class="form-label">CVV</label>
+                                        <input type="text" id="cvv" class="form-control" placeholder="123" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="paypal-payment-fields" style="display: none;">
+                                <div class="paypal-info">
+                                    <p>Serás redirigido a PayPal para completar tu pago de forma segura.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input type="checkbox" id="terms" class="form-check-input" required>
+                                    <label for="terms" class="form-check-label">
+                                        Acepto los <a href="#" class="text-primary">términos y condiciones</a>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-block" id="submit-payment">
+                                <i class="fas fa-lock"></i> Pagar $4.99
+                            </button>
+                        </form>
+                        
+                        <div class="payment-security">
+                            <div class="security-icons">
+                                <i class="fas fa-lock"></i>
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-amex"></i>
+                                <i class="fab fa-paypal"></i>
+                            </div>
+                            <p>Pago 100% seguro. Tus datos están protegidos con encriptación SSL.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <section class="testimonials">
+            <h2 class="section-title">Lo que dicen nuestros usuarios</h2>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"La mejor aplicación para descargar videos que he usado. La versión premium vale cada centavo."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Usuario">
+                        </div>
+                        <div class="author-info">
+                            <h4>Carlos Rodríguez</h4>
+                            <p>Usuario Premium</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Increíble aplicación. Descargo videos de Instagram y TikTok sin problemas. El guardado directo en galería es genial."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Usuario">
+                        </div>
+                        <div class="author-info">
+                            <h4>Laura Martínez</h4>
+                            <p>Usuario Premium</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"Compré la versión premium y no me arrepiento. La aplicación es rápida y fácil de usar."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Usuario">
+                        </div>
+                        <div class="author-info">
+                            <h4>Miguel Ángel</h4>
+                            <p>Usuario Premium</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="faq">
+            <h2 class="section-title">Preguntas frecuentes</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>¿Cómo recibiré la aplicación después del pago?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Después de completar el pago, serás redirigido a una página de descarga donde podrás descargar la aplicación premium inmediatamente. También recibirás un correo electrónico con el enlace de descarga.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>¿El pago es único o una suscripción?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Es un pago único de $4.99. No hay suscripciones ni pagos recurrentes. Pagas una vez y disfrutas de todas las características premium para siempre.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>¿Qué métodos de pago aceptan?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Aceptamos tarjetas de crédito/débito (Visa, MasterCard, American Express) y PayPal. Todos los pagos son procesados de forma segura.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>¿Puedo solicitar un reembolso?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, ofrecemos una garantía de satisfacción de 30 días. Si no estás satisfecho con la aplicación, puedes solicitar un reembolso completo dentro de los 30 días posteriores a la compra.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-copyright">
+                    &copy; <span id="current-year">{% if now %}{{ now.year }}{% else %}2025{% endif %}</span> Descargador de Videos - Todos los derechos reservados
+                </div>
+                <div class="footer-links">
+                    <a href="/" class="footer-link">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <a href="/history" class="footer-link">
+                        <i class="fas fa-history"></i>
+                    </a>
+                    <a href="/app" class="footer-link">
+                        <i class="fas fa-mobile-alt"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                Esta aplicación utiliza yt-dlp para descargar videos. No almacenamos ningún contenido protegido por derechos de autor.
+                Utiliza esta herramienta de manera responsable y respeta los términos de servicio de las plataformas.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Payment Success Modal -->
+    <div class="modal" id="payment-success-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-check-circle text-success"></i> ¡Pago completado!</h2>
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Tu pago ha sido procesado correctamente. ¡Gracias por tu compra!</p>
+                <p>Haz clic en el botón de abajo para descargar la aplicación premium:</p>
+                <a href="#" id="download-premium-link" class="btn btn-primary btn-block">
+                    <i class="fas fa-download"></i> Descargar App Premium
+                </a>
+                <p class="mt-3">También hemos enviado un enlace de descarga a tu correo electrónico.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+    <script>
+        // Toggle mobile menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('navbar-nav').classList.toggle('show');
+        });
+        
+        // Get current year for footer
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentYearElement = document.getElementById('current-year');
+            if (currentYearElement) {
+                const year = new Date().getFullYear();
+                currentYearElement.textContent = year;
+            }
+        });
+        
+        // Toggle FAQ items
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+        }
+        
+        // Select payment method
+        function selectPaymentMethod(element) {
+            // Remove active class from all payment methods
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.classList.remove('active');
+            });
+            
+            // Add active class to selected method
+            element.classList.add('active');
+            
+            // Show/hide payment fields based on selected method
+            const method = element.getAttribute('data-method');
+            if (method === 'card') {
+                document.getElementById('card-payment-fields').style.display = 'block';
+                document.getElementById('paypal-payment-fields').style.display = 'none';
+            } else if (method === 'paypal') {
+                document.getElementById('card-payment-fields').style.display = 'none';
+                document.getElementById('paypal-payment-fields').style.display = 'block';
+            }
+        }
+        
+        // Handle payment form submission
+        document.getElementById('payment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get selected payment method
+            const selectedMethod = document.querySelector('.payment-method.active').getAttribute('data-method');
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                payment_method: selectedMethod
+            };
+            
+            // Add card details if card payment method is selected
+            if (selectedMethod === 'card') {
+                formData.card_number = document.getElementById('card-number').value;
+                formData.expiry = document.getElementById('expiry').value;
+                formData.cvv = document.getElementById('cvv').value;
+            }
+            
+            // Show loading state
+            const submitBtn = document.getElementById('submit-payment');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            
+            // Send payment request to server
+            fetch('/api/process-payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Set download link
+                    document.getElementById('download-premium-link').href = data.download_url;
+                    
+                    // Show success modal
+                    document.getElementById('payment-success-modal').style.display = 'flex';
+                } else {
+                    // Show error message
+                    alert('Error: ' + data.message);
+                    
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-lock"></i> Pagar $4.99';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ha ocurrido un error al procesar el pago. Por favor, inténtalo de nuevo.');
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-lock"></i> Pagar $4.99';
+            });
+        });
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('payment-success-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html> 
